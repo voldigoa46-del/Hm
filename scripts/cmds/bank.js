@@ -32,11 +32,6 @@ const bankData = {
 // --- FIN DU BLOC AJOUTÉ ---
 
 module.exports = {
-    config: {
-        name: "bank",
-        // ... la suite de ton code actuel
-
-module.exports = {
 	config: {
 		name: "bank",
 		version: "4.0",
