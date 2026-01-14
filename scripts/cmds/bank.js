@@ -1,6 +1,40 @@
-
 const { getTime } = global.utils;
 const fonts = require('../../func/fonts.js');
+const fs = require('fs-extra'); // Assure-toi d'avoir ces lignes
+const path = require('path');
+
+// --- AJOUTE CE BLOC ICI ---
+const pathData = path.join(__dirname, '../../database/bankData.json');
+
+const bankData = {
+    get: async (id) => {
+        if (!fs.existsSync(pathData)) {
+            if (!fs.existsSync(path.dirname(pathData))) fs.mkdirSync(path.dirname(pathData), { recursive: true });
+            fs.writeJsonSync(pathData, {});
+        }
+        let data = fs.readJsonSync(pathData);
+        return data[id] || null;
+    },
+    set: async (id, value) => {
+        let data = fs.readJsonSync(pathData);
+        data[id] = value;
+        fs.writeJsonSync(pathData, data, { spaces: 4 });
+    },
+    create: async (id) => {
+        let newUser = { 
+            bank: 0, savings: 0, vault: 0, lastCollect: 0, 
+            stocks: {}, crypto: {}, businesses: [], realEstate: [], history: [] 
+        };
+        await bankData.set(id, newUser);
+        return newUser;
+    }
+};
+// --- FIN DU BLOC AJOUTÉ ---
+
+module.exports = {
+    config: {
+        name: "bank",
+        // ... la suite de ton code actuel
 
 module.exports = {
 	config: {
